@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="JModelStoreContainer">
+    <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tranx" EntityType="JModel.Store.Tranx" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="JModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MessageTb_Tranx" Association="JModel.Store.FK_MessageTb_Tranx">
+      <End Role="Tranx" EntitySet="Tranx" />
+      <End Role="MessageTb" EntitySet="MessageTb" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MessageTb_Tranx1" Association="JModel.Store.FK_MessageTb_Tranx1">
+      <End Role="Tranx" EntitySet="Tranx" />
+      <End Role="MessageTb" EntitySet="MessageTb" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tranx_Group" Association="JModel.Store.FK_Tranx_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Tranx" EntitySet="Tranx" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tranx_User" Association="JModel.Store.FK_Tranx_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Tranx" EntitySet="Tranx" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GName" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="MessageTb">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="FromTID" Type="int" />
+    <Property Name="ToTID" Type="int" />
+    <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Tranx">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GId" Type="int" Nullable="false" />
+    <Property Name="UId" Type="int" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="30" />
+    <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UId" />
+    </Key>
+    <Property Name="UId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_MessageTb_Tranx">
+    <End Role="Tranx" Type="JModel.Store.Tranx" Multiplicity="0..1" />
+    <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tranx">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageTb">
+        <PropertyRef Name="FromTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MessageTb_Tranx1">
+    <End Role="Tranx" Type="JModel.Store.Tranx" Multiplicity="0..1" />
+    <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tranx">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageTb">
+        <PropertyRef Name="ToTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tranx_Group">
+    <End Role="Group" Type="JModel.Store.Group" Multiplicity="1" />
+    <End Role="Tranx" Type="JModel.Store.Tranx" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tranx">
+        <PropertyRef Name="GId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tranx_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="1" />
+    <End Role="Tranx" Type="JModel.Store.Tranx" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Tranx">
+        <PropertyRef Name="UId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CreateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GName" Type="varchar" Mode="In" />
+  </Function>
+</Schema>

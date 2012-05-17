@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="JModelStoreContainer">
+          <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="JModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserState" EntityType="JModel.Store.UserState" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_MessageTb_Group" Association="JModel.Store.FK_MessageTb_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="MessageTb" EntitySet="MessageTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserState_User" Association="JModel.Store.FK_UserState_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserState" EntitySet="UserState" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GId" />
+          </Key>
+          <Property Name="GId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GName" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="MessageTb">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GID" Type="int" />
+          <Property Name="FromIP" Type="int" />
+          <Property Name="ToIP" Type="int" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="MessageType" Type="nvarchar" MaxLength="20" />
+          <Property Name="Delivered" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UId" />
+          </Key>
+          <Property Name="UId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastLogin" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserState">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Datetime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_MessageTb_Group">
+          <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
+          <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GId" />
+            </Principal>
+            <Dependent Role="MessageTb">
+              <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserState_User">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="UserState" Type="JModel.Store.UserState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="UserState">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CreateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GName" Type="varchar" Mode="In" />
+        </Function>
+        <!--Errors Found During Generation:
+      warning 6013: The table/view 'J.dbo.Block' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="Block">
+        <Property Name="BlockedUId" Type="int" />
+        <Property Name="BlockedToUId" Type="int" />
+      </EntityType>-->
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="JModelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Groups" EntityType="JModel.Group" />
+          <EntitySet Name="MessageTbs" EntityType="JModel.MessageTb" />
+          <EntitySet Name="Users" EntityType="JModel.User" />
+          <EntitySet Name="UserStates" EntityType="JModel.UserState" />
+          <AssociationSet Name="FK_MessageTb_Group" Association="JModel.FK_MessageTb_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="MessageTb" EntitySet="MessageTbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserState_User" Association="JModel.FK_UserState_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserState" EntitySet="UserStates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GId" />
+          </Key>
+          <Property Name="GId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MessageTbs" Relationship="JModel.FK_MessageTb_Group" FromRole="Group" ToRole="MessageTb" />
+        </EntityType>
+        <EntityType Name="MessageTb">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GID" Type="Int32" />
+          <Property Name="FromIP" Type="Int32" />
+          <Property Name="ToIP" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="MessageType" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Delivered" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="JModel.FK_MessageTb_Group" FromRole="MessageTb" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UId" />
+          </Key>
+          <Property Name="UId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IP" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Model" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastLogin" Type="DateTime" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserStates" Relationship="JModel.FK_UserState_User" FromRole="User" ToRole="UserState" />
+        </EntityType>
+        <EntityType Name="UserState">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Datetime" Type="DateTime" />
+          <NavigationProperty Name="User" Relationship="JModel.FK_UserState_User" FromRole="UserState" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_MessageTb_Group">
+          <End Role="Group" Type="JModel.Group" Multiplicity="0..1" />
+          <End Role="MessageTb" Type="JModel.MessageTb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GId" />
+            </Principal>
+            <Dependent Role="MessageTb">
+              <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserState_User">
+          <End Role="User" Type="JModel.User" Multiplicity="0..1" />
+          <End Role="UserState" Type="JModel.UserState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="UserState">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JModelStoreContainer" CdmEntityContainer="JModelEntities">
+          <EntitySetMapping Name="Groups"><EntityTypeMapping TypeName="JModel.Group"><MappingFragment StoreEntitySet="Group">
+            <ScalarProperty Name="GId" ColumnName="GId" />
+            <ScalarProperty Name="GName" ColumnName="GName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MessageTbs"><EntityTypeMapping TypeName="JModel.MessageTb"><MappingFragment StoreEntitySet="MessageTb">
+            <ScalarProperty Name="MID" ColumnName="MID" />
+            <ScalarProperty Name="GID" ColumnName="GID" />
+            <ScalarProperty Name="FromIP" ColumnName="FromIP" />
+            <ScalarProperty Name="ToIP" ColumnName="ToIP" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+            <ScalarProperty Name="Message" ColumnName="Message" />
+            <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+            <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="JModel.User"><MappingFragment StoreEntitySet="User">
+            <ScalarProperty Name="UId" ColumnName="UId" />
+            <ScalarProperty Name="UName" ColumnName="UName" />
+            <ScalarProperty Name="IP" ColumnName="IP" />
+            <ScalarProperty Name="Model" ColumnName="Model" />
+            <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserStates"><EntityTypeMapping TypeName="JModel.UserState"><MappingFragment StoreEntitySet="UserState">
+            <ScalarProperty Name="SID" ColumnName="SID" />
+            <ScalarProperty Name="UID" ColumnName="UID" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+            <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model">
+        <EntityTypeShape EntityType="JModel.Group" Width="1.5" PointX="5.125" PointY="1.125" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.MessageTb" Width="1.5" PointX="7.125" PointY="1.125" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.User" Width="1.5" PointX="0.75" PointY="1" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.UserState" Width="1.5" PointX="3" PointY="1.125" Height="1.9802864583333335" IsExpanded="true" />
+        <AssociationConnector Association="JModel.FK_MessageTb_Group" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.625" PointY="1.9228417968749998" />
+          <ConnectorPoint PointX="7.125" PointY="1.9228417968749998" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_UserState_User" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.1151432291666667" />
+          <ConnectorPoint PointX="3" PointY="2.1151432291666667" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

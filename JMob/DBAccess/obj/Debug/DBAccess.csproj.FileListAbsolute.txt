@@ -1,0 +1,6 @@
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\bin\Debug\DBAccess.dll.config
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\bin\Debug\DBAccess.dll
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\bin\Debug\DBAccess.pdb
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\obj\Debug\DBAccess.dll
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\DBAccess\obj\Debug\DBAccess.pdb

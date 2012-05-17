@@ -1,0 +1,6 @@
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\bin\Debug\BizService.dll.config
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\bin\Debug\BizService.dll
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\bin\Debug\BizService.pdb
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\obj\Debug\BizService.dll
+C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\obj\Debug\BizService.pdb

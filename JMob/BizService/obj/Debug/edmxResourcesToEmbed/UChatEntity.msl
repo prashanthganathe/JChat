@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JModelStoreContainer" CdmEntityContainer="JEntities">
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="JModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GName" ColumnName="GName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageTbs">
+      <EntityTypeMapping TypeName="JModel.MessageTb">
+        <MappingFragment StoreEntitySet="MessageTb">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="FromTID" ColumnName="FromTID" />
+          <ScalarProperty Name="ToTID" ColumnName="ToTID" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tranges">
+      <EntityTypeMapping TypeName="JModel.Tranx">
+        <MappingFragment StoreEntitySet="Tranx">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GId" ColumnName="GId" />
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="JModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="UName" ColumnName="UName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
