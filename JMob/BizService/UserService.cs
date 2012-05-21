@@ -7,13 +7,18 @@ namespace BizService
 {
     public class UserService
     {
-       JModelEntities model = new JModelEntities();
+       ModelEntities model = new ModelEntities();
         public int Create(User obj)
         {
             var Grp = model.Users.Single(e => e.IP == obj.IP);
             if (Grp != null)
+            {
+                Grp.LastLogin = DateTime.Now;
                 return Grp.UId;
+            }
             obj.UName = GetUniqueUser();
+            obj.IsActive = true;
+            obj.LastLogin = DateTime.Now;            
             model.Users.AddObject(obj);
             return model.SaveChanges();            
         }
@@ -36,53 +41,51 @@ namespace BizService
             var Usr = model.Users.Single(e => e.UId == obj.UId );
             if (Usr != null)
             {
-                Usr.UName = obj.UName;
-                Usr.Status = obj.Status;
+                Usr.UName = obj.UName;                
                 Usr.Model = obj.Model;
-                Usr.LastLogin = DateTime.Now;
-                Usr.BlockCount = obj.BlockCount;
+                Usr.LastLogin = DateTime.Now;             
             }
             return model.SaveChanges();
         }
 
-        public bool IncreaseBlockCount(int UId)
-        {
-            var Usr = model.Users.Single(e => e.UId == UId);
-            if (Usr != null)
-            {
-                Usr.BlockCount = Usr.BlockCount+1;
-                return model.SaveChanges()>0?true:false;
-            }
-            return false;
-        }
+        //public bool IncreaseBlockCount(int UId)
+        //{
+        //    var Usr = model.Users.Single(e => e.UId == UId);
+        //    if (Usr != null)
+        //    {
+        //        Usr.BlockCount = Usr.BlockCount+1;
+        //        return model.SaveChanges()>0?true:false;
+        //    }
+        //    return false;
+        //}
 
 
 
         public int Update(User obj)
         {
-            var Grp = cont.Users.Single(e => e.UId == obj.UId);
+            var Grp = model.Users.Single(e => e.UId == obj.UId);
             if (Grp != null)
             {
                 Grp.UName = obj.UName;
-                return cont.SaveChanges();
+                return model.SaveChanges();
             }
             return 0;
         }
 
         public int Delete(int id)
         {
-            var Usr = cont.Users.Single(e => e.UId == id);
+            var Usr = model.Users.Single(e => e.UId == id);
             if (Usr != null)
             {
-                cont.Users.DeleteObject(Usr);
-                return cont.SaveChanges();
+                model.Users.DeleteObject(Usr);
+                return model.SaveChanges();
             }
             return 0;
         }
 
         public IEnumerable<User> GetGroups()
         {
-            return cont.Users.ToList();
+            return model.Users.ToList();
         }
     }
 }

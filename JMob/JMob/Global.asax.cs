@@ -6,7 +6,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.WebPages;
 
 namespace JMob
 {
@@ -39,33 +38,12 @@ namespace JMob
 
         protected void Application_Start()
         {
-            AddDisplayModes();
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
-
-
-            
-          
-        }
-
-        public void AddDisplayModes()
-        {
-
-            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("Android")
-            {
-                ContextCondition = (context => context.Request.UserAgent.IndexOf
-                    ("Android", StringComparison.OrdinalIgnoreCase) >= 0)
-            });
-
-            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("WindowsPhone")
-            {
-                ContextCondition = (context => context.Request.UserAgent.IndexOf
-                    ("Windows Phone OS", StringComparison.OrdinalIgnoreCase) >= 0)
-            });
         }
     }
 }

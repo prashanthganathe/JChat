@@ -18,7 +18,12 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
+[assembly: EdmRelationshipAttribute("JModel", "FK_Answer_Question", "Question", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(BizService.Question), "Answer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Answer), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Answer_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Answer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Answer), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Block_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Block", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Block), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Block_User1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Block", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Block), true)]
 [assembly: EdmRelationshipAttribute("JModel", "FK_MessageTb_Group", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.Group), "MessageTb", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.MessageTb), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Question_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Question", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Question), true)]
 [assembly: EdmRelationshipAttribute("JModel", "FK_UserState_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "UserState", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.UserState), true)]
 
 #endregion
@@ -30,32 +35,32 @@ namespace BizService
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    public partial class JModelEntities : ObjectContext
+    public partial class ModelEntities : ObjectContext
     {
         #region Constructors
     
         /// <summary>
-        /// Initializes a new JModelEntities object using the connection string found in the 'JModelEntities' section of the application configuration file.
+        /// Initializes a new ModelEntities object using the connection string found in the 'ModelEntities' section of the application configuration file.
         /// </summary>
-        public JModelEntities() : base("name=JModelEntities", "JModelEntities")
+        public ModelEntities() : base("name=ModelEntities", "ModelEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new JModelEntities object.
+        /// Initialize a new ModelEntities object.
         /// </summary>
-        public JModelEntities(string connectionString) : base(connectionString, "JModelEntities")
+        public ModelEntities(string connectionString) : base(connectionString, "ModelEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new JModelEntities object.
+        /// Initialize a new ModelEntities object.
         /// </summary>
-        public JModelEntities(EntityConnection connection) : base(connection, "JModelEntities")
+        public ModelEntities(EntityConnection connection) : base(connection, "ModelEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -70,6 +75,38 @@ namespace BizService
         #endregion
     
         #region ObjectSet Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Answer> Answers
+        {
+            get
+            {
+                if ((_Answers == null))
+                {
+                    _Answers = base.CreateObjectSet<Answer>("Answers");
+                }
+                return _Answers;
+            }
+        }
+        private ObjectSet<Answer> _Answers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Block> Blocks
+        {
+            get
+            {
+                if ((_Blocks == null))
+                {
+                    _Blocks = base.CreateObjectSet<Block>("Blocks");
+                }
+                return _Blocks;
+            }
+        }
+        private ObjectSet<Block> _Blocks;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -102,6 +139,22 @@ namespace BizService
             }
         }
         private ObjectSet<MessageTb> _MessageTbs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Question> Questions
+        {
+            get
+            {
+                if ((_Questions == null))
+                {
+                    _Questions = base.CreateObjectSet<Question>("Questions");
+                }
+                return _Questions;
+            }
+        }
+        private ObjectSet<Question> _Questions;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -139,6 +192,22 @@ namespace BizService
         #region AddTo Methods
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the Answers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAnswers(Answer answer)
+        {
+            base.AddObject("Answers", answer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Blocks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBlocks(Block block)
+        {
+            base.AddObject("Blocks", block);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Groups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToGroups(Group group)
@@ -152,6 +221,14 @@ namespace BizService
         public void AddToMessageTbs(MessageTb messageTb)
         {
             base.AddObject("MessageTbs", messageTb);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Questions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToQuestions(Question question)
+        {
+            base.AddObject("Questions", question);
         }
     
         /// <summary>
@@ -177,6 +254,468 @@ namespace BizService
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="JModel", Name="Answer")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Answer : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Answer object.
+        /// </summary>
+        /// <param name="aId">Initial value of the AId property.</param>
+        /// <param name="qID">Initial value of the QID property.</param>
+        public static Answer CreateAnswer(global::System.Int32 aId, global::System.Int32 qID)
+        {
+            Answer answer = new Answer();
+            answer.AId = aId;
+            answer.QID = qID;
+            return answer;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 AId
+        {
+            get
+            {
+                return _AId;
+            }
+            set
+            {
+                if (_AId != value)
+                {
+                    OnAIdChanging(value);
+                    ReportPropertyChanging("AId");
+                    _AId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AId");
+                    OnAIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _AId;
+        partial void OnAIdChanging(global::System.Int32 value);
+        partial void OnAIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QID
+        {
+            get
+            {
+                return _QID;
+            }
+            set
+            {
+                OnQIDChanging(value);
+                ReportPropertyChanging("QID");
+                _QID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QID");
+                OnQIDChanged();
+            }
+        }
+        private global::System.Int32 _QID;
+        partial void OnQIDChanging(global::System.Int32 value);
+        partial void OnQIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Answer1
+        {
+            get
+            {
+                return _Answer1;
+            }
+            set
+            {
+                OnAnswer1Changing(value);
+                ReportPropertyChanging("Answer1");
+                _Answer1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Answer1");
+                OnAnswer1Changed();
+            }
+        }
+        private global::System.String _Answer1;
+        partial void OnAnswer1Changing(global::System.String value);
+        partial void OnAnswer1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Agree
+        {
+            get
+            {
+                return _Agree;
+            }
+            set
+            {
+                OnAgreeChanging(value);
+                ReportPropertyChanging("Agree");
+                _Agree = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Agree");
+                OnAgreeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Agree;
+        partial void OnAgreeChanging(Nullable<global::System.Int32> value);
+        partial void OnAgreeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateTime;
+        partial void OnDateTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateTimeChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Answer_Question", "Question")]
+        public Question Question
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Question>("JModel.FK_Answer_Question", "Question").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Question>("JModel.FK_Answer_Question", "Question").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Question> QuestionReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Question>("JModel.FK_Answer_Question", "Question");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Question>("JModel.FK_Answer_Question", "Question", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Answer_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Answer_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Answer_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Answer_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Answer_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="JModel", Name="Block")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Block : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Block object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static Block CreateBlock(global::System.Int32 id)
+        {
+            Block block = new Block();
+            block.ID = id;
+            return block;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BlockedUId
+        {
+            get
+            {
+                return _BlockedUId;
+            }
+            set
+            {
+                OnBlockedUIdChanging(value);
+                ReportPropertyChanging("BlockedUId");
+                _BlockedUId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BlockedUId");
+                OnBlockedUIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BlockedUId;
+        partial void OnBlockedUIdChanging(Nullable<global::System.Int32> value);
+        partial void OnBlockedUIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BlockedToUId
+        {
+            get
+            {
+                return _BlockedToUId;
+            }
+            set
+            {
+                OnBlockedToUIdChanging(value);
+                ReportPropertyChanging("BlockedToUId");
+                _BlockedToUId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BlockedToUId");
+                OnBlockedToUIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BlockedToUId;
+        partial void OnBlockedToUIdChanging(Nullable<global::System.Int32> value);
+        partial void OnBlockedToUIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateTime;
+        partial void OnDateTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateTimeChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Block_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Block_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Block_User1", "User")]
+        public User User1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User1", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User1", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> User1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Block_User1", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Block_User1", "User", value);
+                }
+            }
+        }
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -252,6 +791,30 @@ namespace BizService
         private global::System.String _GName;
         partial void OnGNameChanging(global::System.String value);
         partial void OnGNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateTime;
+        partial void OnDateTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateTimeChanged();
 
         #endregion
     
@@ -368,7 +931,7 @@ namespace BizService
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> FromIP
+        public global::System.String FromIP
         {
             get
             {
@@ -378,13 +941,13 @@ namespace BizService
             {
                 OnFromIPChanging(value);
                 ReportPropertyChanging("FromIP");
-                _FromIP = StructuralObject.SetValidValue(value);
+                _FromIP = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("FromIP");
                 OnFromIPChanged();
             }
         }
-        private Nullable<global::System.Int32> _FromIP;
-        partial void OnFromIPChanging(Nullable<global::System.Int32> value);
+        private global::System.String _FromIP;
+        partial void OnFromIPChanging(global::System.String value);
         partial void OnFromIPChanged();
     
         /// <summary>
@@ -392,7 +955,7 @@ namespace BizService
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> ToIP
+        public global::System.String ToIP
         {
             get
             {
@@ -402,13 +965,13 @@ namespace BizService
             {
                 OnToIPChanging(value);
                 ReportPropertyChanging("ToIP");
-                _ToIP = StructuralObject.SetValidValue(value);
+                _ToIP = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("ToIP");
                 OnToIPChanged();
             }
         }
-        private Nullable<global::System.Int32> _ToIP;
-        partial void OnToIPChanging(Nullable<global::System.Int32> value);
+        private global::System.String _ToIP;
+        partial void OnToIPChanging(global::System.String value);
         partial void OnToIPChanged();
     
         /// <summary>
@@ -545,6 +1108,196 @@ namespace BizService
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Group>("JModel.FK_MessageTb_Group", "Group", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="JModel", Name="Question")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Question : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Question object.
+        /// </summary>
+        /// <param name="qID">Initial value of the QID property.</param>
+        public static Question CreateQuestion(global::System.Int32 qID)
+        {
+            Question question = new Question();
+            question.QID = qID;
+            return question;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QID
+        {
+            get
+            {
+                return _QID;
+            }
+            set
+            {
+                if (_QID != value)
+                {
+                    OnQIDChanging(value);
+                    ReportPropertyChanging("QID");
+                    _QID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("QID");
+                    OnQIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _QID;
+        partial void OnQIDChanging(global::System.Int32 value);
+        partial void OnQIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Question1
+        {
+            get
+            {
+                return _Question1;
+            }
+            set
+            {
+                OnQuestion1Changing(value);
+                ReportPropertyChanging("Question1");
+                _Question1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Question1");
+                OnQuestion1Changed();
+            }
+        }
+        private global::System.String _Question1;
+        partial void OnQuestion1Changing(global::System.String value);
+        partial void OnQuestion1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateTime
+        {
+            get
+            {
+                return _DateTime;
+            }
+            set
+            {
+                OnDateTimeChanging(value);
+                ReportPropertyChanging("DateTime");
+                _DateTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateTime");
+                OnDateTimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateTime;
+        partial void OnDateTimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateTimeChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Answer_Question", "Answer")]
+        public EntityCollection<Answer> Answers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Answer>("JModel.FK_Answer_Question", "Answer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Answer>("JModel.FK_Answer_Question", "Answer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Question_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Question_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Question_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Question_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Question_User", "User", value);
                 }
             }
         }
@@ -726,10 +1479,122 @@ namespace BizService
         private global::System.Boolean _IsActive;
         partial void OnIsActiveChanging(global::System.Boolean value);
         partial void OnIsActiveChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> Datetime
+        {
+            get
+            {
+                return _Datetime;
+            }
+            set
+            {
+                OnDatetimeChanging(value);
+                ReportPropertyChanging("Datetime");
+                _Datetime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Datetime");
+                OnDatetimeChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _Datetime;
+        partial void OnDatetimeChanging(Nullable<global::System.DateTime> value);
+        partial void OnDatetimeChanged();
 
         #endregion
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Answer_User", "Answer")]
+        public EntityCollection<Answer> Answers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Answer>("JModel.FK_Answer_User", "Answer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Answer>("JModel.FK_Answer_User", "Answer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Block_User", "Block")]
+        public EntityCollection<Block> Blocks
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Block>("JModel.FK_Block_User", "Block");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Block>("JModel.FK_Block_User", "Block", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Block_User1", "Block")]
+        public EntityCollection<Block> Blocks1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Block>("JModel.FK_Block_User1", "Block");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Block>("JModel.FK_Block_User1", "Block", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Question_User", "Question")]
+        public EntityCollection<Question> Questions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Question>("JModel.FK_Question_User", "Question");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Question>("JModel.FK_Question_User", "Question", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.

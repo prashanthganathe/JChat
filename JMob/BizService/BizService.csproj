@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerService.cs" />
+    <Compile Include="BlockService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="Model.Designer.cs">
@@ -51,14 +53,18 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionService.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="UserStateService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

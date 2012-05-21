@@ -7,22 +7,22 @@ namespace BizService
 {
     public class GroupService
     {
-        JEntities1 cont = new JEntities1();
+        ModelEntities cont = new ModelEntities();
         public int Create(Group obj)
         {
           var Grp= cont.Groups.Single(e => e.GName == obj.GName);
           if (Grp != null)
           {
-              Random random = new Random();
-              obj.GName = obj.GName + random.Next(0, 100);
+              return Grp.GId;
           }
           cont.Groups.AddObject(obj);
-          return cont.SaveChanges(); 
+           cont.SaveChanges();
+           return Grp.GId;
         }
 
         public int Update(Group obj)
         {
-            var Grp = cont.Groups.Single(e => e.Id == obj.Id);
+            var Grp = cont.Groups.Single(e => e.GId == obj.GId);
             if (Grp != null)
             {
                 Grp.GName = obj.GName;
@@ -33,7 +33,7 @@ namespace BizService
 
         public int Delete(int id)
         {
-            var Grp = cont.Groups.Single(e => e.Id == id);
+            var Grp = cont.Groups.Single(e => e.GId == id);
             if (Grp != null)
             {
                 cont.Groups.DeleteObject(Grp);

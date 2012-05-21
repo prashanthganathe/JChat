@@ -4,3 +4,9 @@ C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\b
 C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\bin\Debug\BizService.pdb
 C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\obj\Debug\BizService.dll
 C:\Users\prashanth.kumar\documents\visual studio 2010\Projects\JMob\BizService\obj\Debug\BizService.pdb
+E:\androidChat\JChat\JMob\BizService\obj\Debug\ResolveAssemblyReference.cache
+E:\androidChat\JChat\JMob\BizService\obj\Debug\BizService.dll
+E:\androidChat\JChat\JMob\BizService\bin\Debug\BizService.dll.config
+E:\androidChat\JChat\JMob\BizService\bin\Debug\BizService.dll
+E:\androidChat\JChat\JMob\BizService\bin\Debug\BizService.pdb
+E:\androidChat\JChat\JMob\BizService\obj\Debug\BizService.pdb

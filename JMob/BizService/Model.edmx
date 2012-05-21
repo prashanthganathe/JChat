@@ -6,25 +6,69 @@
     <edmx:StorageModels>
       <Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="JModelStoreContainer">
+          <EntitySet Name="Answer" EntityType="JModel.Store.Answer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Block" EntityType="JModel.Store.Block" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Question" EntityType="JModel.Store.Question" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User" EntityType="JModel.Store.User" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserState" EntityType="JModel.Store.UserState" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Answer_Question" Association="JModel.Store.FK_Answer_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_User" Association="JModel.Store.FK_Answer_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Block_User" Association="JModel.Store.FK_Block_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Block" EntitySet="Block" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Block_User1" Association="JModel.Store.FK_Block_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Block" EntitySet="Block" />
+          </AssociationSet>
           <AssociationSet Name="FK_MessageTb_Group" Association="JModel.Store.FK_MessageTb_Group">
             <End Role="Group" EntitySet="Group" />
             <End Role="MessageTb" EntitySet="MessageTb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_User" Association="JModel.Store.FK_Question_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Question" EntitySet="Question" />
           </AssociationSet>
           <AssociationSet Name="FK_UserState_User" Association="JModel.Store.FK_UserState_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserState" EntitySet="UserState" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AId" />
+          </Key>
+          <Property Name="AId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="int" />
+          <Property Name="QID" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" />
+          <Property Name="Agree" Type="int" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BlockedUId" Type="int" />
+          <Property Name="BlockedToUId" Type="int" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GId" />
           </Key>
           <Property Name="GId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="GName" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="MessageTb">
           <Key>
@@ -32,12 +76,21 @@
           </Key>
           <Property Name="MID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="GID" Type="int" />
-          <Property Name="FromIP" Type="int" />
-          <Property Name="ToIP" Type="int" />
+          <Property Name="FromIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="ToIP" Type="nvarchar" MaxLength="50" />
           <Property Name="DateTime" Type="datetime" Nullable="false" />
           <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="MessageType" Type="nvarchar" MaxLength="20" />
           <Property Name="Delivered" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QID" />
+          </Key>
+          <Property Name="QID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UID" Type="int" />
+          <Property Name="DateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -49,6 +102,7 @@
           <Property Name="Model" Type="nvarchar" MaxLength="50" />
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" />
         </EntityType>
         <EntityType Name="UserState">
           <Key>
@@ -59,6 +113,54 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Datetime" Type="datetime" />
         </EntityType>
+        <Association Name="FK_Answer_Question">
+          <End Role="Question" Type="JModel.Store.Question" Multiplicity="1" />
+          <End Role="Answer" Type="JModel.Store.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_User">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Answer" Type="JModel.Store.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Block_User">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Block" Type="JModel.Store.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BlockedToUId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Block_User1">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Block" Type="JModel.Store.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BlockedUId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MessageTb_Group">
           <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
           <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
@@ -68,6 +170,18 @@
             </Principal>
             <Dependent Role="MessageTb">
               <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_User">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Question" Type="JModel.Store.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -86,38 +200,79 @@
         <Function Name="CreateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GName" Type="varchar" Mode="In" />
         </Function>
-        <!--Errors Found During Generation:
-      warning 6013: The table/view 'J.dbo.Block' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="Block">
-        <Property Name="BlockedUId" Type="int" />
-        <Property Name="BlockedToUId" Type="int" />
-      </EntityType>-->
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="JModelEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ModelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="JModel.Answer" />
+          <EntitySet Name="Blocks" EntityType="JModel.Block" />
           <EntitySet Name="Groups" EntityType="JModel.Group" />
           <EntitySet Name="MessageTbs" EntityType="JModel.MessageTb" />
+          <EntitySet Name="Questions" EntityType="JModel.Question" />
           <EntitySet Name="Users" EntityType="JModel.User" />
           <EntitySet Name="UserStates" EntityType="JModel.UserState" />
+          <AssociationSet Name="FK_Answer_Question" Association="JModel.FK_Answer_Question">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_User" Association="JModel.FK_Answer_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Block_User" Association="JModel.FK_Block_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Block" EntitySet="Blocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Block_User1" Association="JModel.FK_Block_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Block" EntitySet="Blocks" />
+          </AssociationSet>
           <AssociationSet Name="FK_MessageTb_Group" Association="JModel.FK_MessageTb_Group">
             <End Role="Group" EntitySet="Groups" />
             <End Role="MessageTb" EntitySet="MessageTbs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_User" Association="JModel.FK_Question_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
           <AssociationSet Name="FK_UserState_User" Association="JModel.FK_UserState_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserState" EntitySet="UserStates" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AId" />
+          </Key>
+          <Property Name="AId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="QID" Type="Int32" Nullable="false" />
+          <Property Name="Answer1" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Agree" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" />
+          <NavigationProperty Name="Question" Relationship="JModel.FK_Answer_Question" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="User" Relationship="JModel.FK_Answer_User" FromRole="Answer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlockedUId" Type="Int32" />
+          <Property Name="BlockedToUId" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" />
+          <NavigationProperty Name="User" Relationship="JModel.FK_Block_User" FromRole="Block" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="JModel.FK_Block_User1" FromRole="Block" ToRole="User" />
+        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GId" />
           </Key>
           <Property Name="GId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="DateTime" Type="DateTime" />
           <NavigationProperty Name="MessageTbs" Relationship="JModel.FK_MessageTb_Group" FromRole="Group" ToRole="MessageTb" />
         </EntityType>
         <EntityType Name="MessageTb">
@@ -126,13 +281,24 @@
           </Key>
           <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GID" Type="Int32" />
-          <Property Name="FromIP" Type="Int32" />
-          <Property Name="ToIP" Type="Int32" />
+          <Property Name="FromIP" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ToIP" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="DateTime" Type="DateTime" Nullable="false" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
           <Property Name="MessageType" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Delivered" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Group" Relationship="JModel.FK_MessageTb_Group" FromRole="MessageTb" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QID" />
+          </Key>
+          <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question1" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" />
+          <NavigationProperty Name="Answers" Relationship="JModel.FK_Answer_Question" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="User" Relationship="JModel.FK_Question_User" FromRole="Question" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -144,6 +310,11 @@
           <Property Name="Model" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="LastLogin" Type="DateTime" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Datetime" Type="DateTime" />
+          <NavigationProperty Name="Answers" Relationship="JModel.FK_Answer_User" FromRole="User" ToRole="Answer" />
+          <NavigationProperty Name="Blocks" Relationship="JModel.FK_Block_User" FromRole="User" ToRole="Block" />
+          <NavigationProperty Name="Blocks1" Relationship="JModel.FK_Block_User1" FromRole="User" ToRole="Block" />
+          <NavigationProperty Name="Questions" Relationship="JModel.FK_Question_User" FromRole="User" ToRole="Question" />
           <NavigationProperty Name="UserStates" Relationship="JModel.FK_UserState_User" FromRole="User" ToRole="UserState" />
         </EntityType>
         <EntityType Name="UserState">
@@ -156,6 +327,54 @@
           <Property Name="Datetime" Type="DateTime" />
           <NavigationProperty Name="User" Relationship="JModel.FK_UserState_User" FromRole="UserState" ToRole="User" />
         </EntityType>
+        <Association Name="FK_Answer_Question">
+          <End Role="Question" Type="JModel.Question" Multiplicity="1" />
+          <End Role="Answer" Type="JModel.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_User">
+          <End Role="User" Type="JModel.User" Multiplicity="0..1" />
+          <End Role="Answer" Type="JModel.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Block_User">
+          <End Role="User" Type="JModel.User" Multiplicity="0..1" />
+          <End Role="Block" Type="JModel.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BlockedToUId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Block_User1">
+          <End Role="User" Type="JModel.User" Multiplicity="0..1" />
+          <End Role="Block" Type="JModel.Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="BlockedUId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MessageTb_Group">
           <End Role="Group" Type="JModel.Group" Multiplicity="0..1" />
           <End Role="MessageTb" Type="JModel.MessageTb" Multiplicity="*" />
@@ -165,6 +384,18 @@
             </Principal>
             <Dependent Role="MessageTb">
               <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_User">
+          <End Role="User" Type="JModel.User" Multiplicity="0..1" />
+          <End Role="Question" Type="JModel.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -185,10 +416,25 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JModelStoreContainer" CdmEntityContainer="JModelEntities">
+        <EntityContainerMapping StorageEntityContainer="JModelStoreContainer" CdmEntityContainer="ModelEntities">
+          <EntitySetMapping Name="Answers"><EntityTypeMapping TypeName="JModel.Answer"><MappingFragment StoreEntitySet="Answer">
+            <ScalarProperty Name="AId" ColumnName="AId" />
+            <ScalarProperty Name="UID" ColumnName="UID" />
+            <ScalarProperty Name="QID" ColumnName="QID" />
+            <ScalarProperty Name="Answer1" ColumnName="Answer" />
+            <ScalarProperty Name="Agree" ColumnName="Agree" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Blocks"><EntityTypeMapping TypeName="JModel.Block"><MappingFragment StoreEntitySet="Block">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="BlockedUId" ColumnName="BlockedUId" />
+            <ScalarProperty Name="BlockedToUId" ColumnName="BlockedToUId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Groups"><EntityTypeMapping TypeName="JModel.Group"><MappingFragment StoreEntitySet="Group">
             <ScalarProperty Name="GId" ColumnName="GId" />
             <ScalarProperty Name="GName" ColumnName="GName" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MessageTbs"><EntityTypeMapping TypeName="JModel.MessageTb"><MappingFragment StoreEntitySet="MessageTb">
             <ScalarProperty Name="MID" ColumnName="MID" />
@@ -200,6 +446,12 @@
             <ScalarProperty Name="MessageType" ColumnName="MessageType" />
             <ScalarProperty Name="Delivered" ColumnName="Delivered" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Questions"><EntityTypeMapping TypeName="JModel.Question"><MappingFragment StoreEntitySet="Question">
+            <ScalarProperty Name="QID" ColumnName="QID" />
+            <ScalarProperty Name="Question1" ColumnName="Question" />
+            <ScalarProperty Name="UID" ColumnName="UID" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="JModel.User"><MappingFragment StoreEntitySet="User">
             <ScalarProperty Name="UId" ColumnName="UId" />
             <ScalarProperty Name="UName" ColumnName="UName" />
@@ -207,6 +459,7 @@
             <ScalarProperty Name="Model" ColumnName="Model" />
             <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
             <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UserStates"><EntityTypeMapping TypeName="JModel.UserState"><MappingFragment StoreEntitySet="UserState">
             <ScalarProperty Name="SID" ColumnName="SID" />
@@ -235,17 +488,45 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model">
-        <EntityTypeShape EntityType="JModel.Group" Width="1.5" PointX="5.125" PointY="1.125" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.MessageTb" Width="1.5" PointX="7.125" PointY="1.125" Height="2.7494921874999996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.User" Width="1.5" PointX="0.75" PointY="1" Height="2.3648893229166656" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.UserState" Width="1.5" PointX="3" PointY="1.125" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Answer" Width="1.5" PointX="5.25" PointY="7.125" Height="2.5571907552083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Block" Width="1.5" PointX="3" PointY="6.375" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Group" Width="1.5" PointX="0.75" PointY="1.5" Height="1.7879850260416665" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.MessageTb" Width="1.5" PointX="3" PointY="1" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Question" Width="1.5" PointX="3" PointY="9.25" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.User" Width="1.5" PointX="0.75" PointY="5.25" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.UserState" Width="1.5" PointX="3" PointY="12.25" Height="1.9802864583333317" IsExpanded="true" />
+        <AssociationConnector Association="JModel.FK_Answer_Question" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="9.4660953776041659" />
+          <ConnectorPoint PointX="5.25" PointY="9.4660953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Answer_User" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="5.78125" />
+          <ConnectorPoint PointX="6" PointY="5.78125" />
+          <ConnectorPoint PointX="6" PointY="7.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Block_User" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.4612939453125" />
+          <ConnectorPoint PointX="3" PointY="7.4612939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Block_User1" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.85564697265625" />
+          <ConnectorPoint PointX="3" PointY="6.85564697265625" />
+        </AssociationConnector>
         <AssociationConnector Association="JModel.FK_MessageTb_Group" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.625" PointY="1.9228417968749998" />
-          <ConnectorPoint PointX="7.125" PointY="1.9228417968749998" />
+          <ConnectorPoint PointX="2.25" PointY="2.3939925130208333" />
+          <ConnectorPoint PointX="3" PointY="2.3939925130208333" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Question_User" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="8.576396484375" />
+          <ConnectorPoint PointX="1.5" PointY="10.3362939453125" />
+          <ConnectorPoint PointX="1.8229191666666667" PointY="10.3362939453125" />
+          <ConnectorPoint PointX="1.9895858333333332" PointY="10.3362939453125" />
+          <ConnectorPoint PointX="3" PointY="10.3362939453125" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_UserState_User" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="2.1151432291666667" />
-          <ConnectorPoint PointX="3" PointY="2.1151432291666667" />
+          <ConnectorPoint PointX="1.9062525" PointY="8.576396484375" />
+          <ConnectorPoint PointX="1.9062525" PointY="13.240143229166666" />
+          <ConnectorPoint PointX="3" PointY="13.240143229166666" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
