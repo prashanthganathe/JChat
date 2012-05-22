@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JModelStoreContainer" CdmEntityContainer="ModelEntities">
+    <EntitySetMapping Name="Answers">
+      <EntityTypeMapping TypeName="JModel.Answer">
+        <MappingFragment StoreEntitySet="Answer">
+          <ScalarProperty Name="AId" ColumnName="AId" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="QID" ColumnName="QID" />
+          <ScalarProperty Name="Answer1" ColumnName="Answer" />
+          <ScalarProperty Name="Agree" ColumnName="Agree" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Blocks">
+      <EntityTypeMapping TypeName="JModel.Block">
+        <MappingFragment StoreEntitySet="Block">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BlockedUId" ColumnName="BlockedUId" />
+          <ScalarProperty Name="BlockedToUId" ColumnName="BlockedToUId" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="JModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="GId" ColumnName="GId" />
+          <ScalarProperty Name="GName" ColumnName="GName" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageTbs">
+      <EntityTypeMapping TypeName="JModel.MessageTb">
+        <MappingFragment StoreEntitySet="MessageTb">
+          <ScalarProperty Name="MID" ColumnName="MID" />
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="FromIP" ColumnName="FromIP" />
+          <ScalarProperty Name="ToIP" ColumnName="ToIP" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+          <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="JModel.Question">
+        <MappingFragment StoreEntitySet="Question">
+          <ScalarProperty Name="QID" ColumnName="QID" />
+          <ScalarProperty Name="Question1" ColumnName="Question" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="JModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="UName" ColumnName="UName" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserStates">
+      <EntityTypeMapping TypeName="JModel.UserState">
+        <MappingFragment StoreEntitySet="UserState">
+          <ScalarProperty Name="SID" ColumnName="SID" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="JModelStoreContainer">
+    <EntitySet Name="Answer" EntityType="JModel.Store.Answer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Block" EntityType="JModel.Store.Block" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Question" EntityType="JModel.Store.Question" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="JModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserState" EntityType="JModel.Store.UserState" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Answer_Question" Association="JModel.Store.FK_Answer_Question">
+      <End Role="Question" EntitySet="Question" />
+      <End Role="Answer" EntitySet="Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Answer_User" Association="JModel.Store.FK_Answer_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Answer" EntitySet="Answer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_User" Association="JModel.Store.FK_Block_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_User1" Association="JModel.Store.FK_Block_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MessageTb_Group" Association="JModel.Store.FK_MessageTb_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="MessageTb" EntitySet="MessageTb" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Question_User" Association="JModel.Store.FK_Question_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserState_User" Association="JModel.Store.FK_UserState_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserState" EntitySet="UserState" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Answer">
+    <Key>
+      <PropertyRef Name="AId" />
+    </Key>
+    <Property Name="AId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="int" />
+    <Property Name="QID" Type="int" Nullable="false" />
+    <Property Name="Answer" Type="nvarchar(max)" />
+    <Property Name="Agree" Type="int" />
+    <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Block">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BlockedUId" Type="int" />
+    <Property Name="BlockedToUId" Type="int" />
+    <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GId" />
+    </Key>
+    <Property Name="GId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GName" Type="nvarchar" MaxLength="200" />
+    <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MessageTb">
+    <Key>
+      <PropertyRef Name="MID" />
+    </Key>
+    <Property Name="MID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GID" Type="int" />
+    <Property Name="FromIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="ToIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="1000" />
+    <Property Name="MessageType" Type="nvarchar" MaxLength="20" />
+    <Property Name="Delivered" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="QID" />
+    </Key>
+    <Property Name="QID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="nvarchar" MaxLength="1000" />
+    <Property Name="UID" Type="int" />
+    <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UId" />
+    </Key>
+    <Property Name="UId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UName" Type="nvarchar" MaxLength="50" />
+    <Property Name="IP" Type="nvarchar" MaxLength="50" />
+    <Property Name="Model" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastLogin" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserState">
+    <Key>
+      <PropertyRef Name="SID" />
+    </Key>
+    <Property Name="SID" Type="int" Nullable="false" />
+    <Property Name="UID" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Answer_Question">
+    <End Role="Question" Type="JModel.Store.Question" Multiplicity="1" />
+    <End Role="Answer" Type="JModel.Store.Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Question">
+        <PropertyRef Name="QID" />
+      </Principal>
+      <Dependent Role="Answer">
+        <PropertyRef Name="QID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Answer_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Answer" Type="JModel.Store.Answer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Answer">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Block" Type="JModel.Store.Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="BlockedToUId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_User1">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Block" Type="JModel.Store.Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="BlockedUId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MessageTb_Group">
+    <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
+    <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GId" />
+      </Principal>
+      <Dependent Role="MessageTb">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Question_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Question" Type="JModel.Store.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserState_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="UserState" Type="JModel.Store.UserState" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="UserState">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CreateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GName" Type="varchar" Mode="In" />
+  </Function>
+</Schema>
