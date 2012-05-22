@@ -79,5 +79,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Friends">
+      <EntityTypeMapping TypeName="JModel.Friend">
+        <MappingFragment StoreEntitySet="Friends">
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="FrID" ColumnName="FrID" />
+          <ScalarProperty Name="UID" ColumnName="UID" />
+          <ScalarProperty Name="FId" ColumnName="FId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

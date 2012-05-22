@@ -31,7 +31,7 @@ namespace JChatApi
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
+                url: "api/{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
@@ -45,7 +45,7 @@ namespace JChatApi
             BundleTable.Bundles.RegisterTemplateBundles();
 
           
-            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
     }
 }

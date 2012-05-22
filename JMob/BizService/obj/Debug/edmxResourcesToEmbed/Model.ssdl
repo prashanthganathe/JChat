@@ -3,6 +3,7 @@
   <EntityContainer Name="JModelStoreContainer">
     <EntitySet Name="Answer" EntityType="JModel.Store.Answer" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Block" EntityType="JModel.Store.Block" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Friends" EntityType="JModel.Store.Friends" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Question" EntityType="JModel.Store.Question" store:Type="Tables" Schema="dbo" />
@@ -23,6 +24,18 @@
     <AssociationSet Name="FK_Block_User1" Association="JModel.Store.FK_Block_User1">
       <End Role="User" EntitySet="User" />
       <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Group" Association="JModel.Store.FK_Friends_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_User" Association="JModel.Store.FK_Friends_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_User1" Association="JModel.Store.FK_Friends_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Friends" EntitySet="Friends" />
     </AssociationSet>
     <AssociationSet Name="FK_MessageTb_Group" Association="JModel.Store.FK_MessageTb_Group">
       <End Role="Group" EntitySet="Group" />
@@ -56,6 +69,15 @@
     <Property Name="BlockedUId" Type="int" />
     <Property Name="BlockedToUId" Type="int" />
     <Property Name="DateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Friends">
+    <Key>
+      <PropertyRef Name="FId" />
+    </Key>
+    <Property Name="FId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UID" Type="int" />
+    <Property Name="FrID" Type="int" />
+    <Property Name="GID" Type="int" />
   </EntityType>
   <EntityType Name="Group">
     <Key>
@@ -153,6 +175,42 @@
       </Principal>
       <Dependent Role="Block">
         <PropertyRef Name="BlockedUId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_Group">
+    <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
+    <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GId" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_User">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_User1">
+    <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+    <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="FrID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

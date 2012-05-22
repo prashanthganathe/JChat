@@ -25,6 +25,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("JModel", "FK_MessageTb_Group", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.Group), "MessageTb", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.MessageTb), true)]
 [assembly: EdmRelationshipAttribute("JModel", "FK_Question_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Question", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Question), true)]
 [assembly: EdmRelationshipAttribute("JModel", "FK_UserState_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "UserState", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.UserState), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Friends_Group", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.Group), "Friend", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Friend), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Friends_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Friend", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Friend), true)]
+[assembly: EdmRelationshipAttribute("JModel", "FK_Friends_User1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(BizService.User), "Friend", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BizService.Friend), true)]
 
 #endregion
 
@@ -187,6 +190,22 @@ namespace BizService
             }
         }
         private ObjectSet<UserState> _UserStates;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Friend> Friends
+        {
+            get
+            {
+                if ((_Friends == null))
+                {
+                    _Friends = base.CreateObjectSet<Friend>("Friends");
+                }
+                return _Friends;
+            }
+        }
+        private ObjectSet<Friend> _Friends;
 
         #endregion
         #region AddTo Methods
@@ -245,6 +264,14 @@ namespace BizService
         public void AddToUserStates(UserState userState)
         {
             base.AddObject("UserStates", userState);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Friends EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFriends(Friend friend)
+        {
+            base.AddObject("Friends", friend);
         }
 
         #endregion
@@ -720,6 +747,250 @@ namespace BizService
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="JModel", Name="Friend")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Friend : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Friend object.
+        /// </summary>
+        /// <param name="fId">Initial value of the FId property.</param>
+        public static Friend CreateFriend(global::System.Int32 fId)
+        {
+            Friend friend = new Friend();
+            friend.FId = fId;
+            return friend;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FId
+        {
+            get
+            {
+                return _FId;
+            }
+            set
+            {
+                if (_FId != value)
+                {
+                    OnFIdChanging(value);
+                    ReportPropertyChanging("FId");
+                    _FId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FId");
+                    OnFIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FId;
+        partial void OnFIdChanging(global::System.Int32 value);
+        partial void OnFIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> UID
+        {
+            get
+            {
+                return _UID;
+            }
+            set
+            {
+                OnUIDChanging(value);
+                ReportPropertyChanging("UID");
+                _UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UID");
+                OnUIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _UID;
+        partial void OnUIDChanging(Nullable<global::System.Int32> value);
+        partial void OnUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FrID
+        {
+            get
+            {
+                return _FrID;
+            }
+            set
+            {
+                OnFrIDChanging(value);
+                ReportPropertyChanging("FrID");
+                _FrID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FrID");
+                OnFrIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FrID;
+        partial void OnFrIDChanging(Nullable<global::System.Int32> value);
+        partial void OnFrIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> GID
+        {
+            get
+            {
+                return _GID;
+            }
+            set
+            {
+                OnGIDChanging(value);
+                ReportPropertyChanging("GID");
+                _GID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GID");
+                OnGIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _GID;
+        partial void OnGIDChanging(Nullable<global::System.Int32> value);
+        partial void OnGIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_Group", "Group")]
+        public Group Group
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("JModel.FK_Friends_Group", "Group").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("JModel.FK_Friends_Group", "Group").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Group> GroupReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("JModel.FK_Friends_Group", "Group");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Group>("JModel.FK_Friends_Group", "Group", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Friends_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_User1", "User")]
+        public User User1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User1", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User1", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> User1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("JModel.FK_Friends_User1", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("JModel.FK_Friends_User1", "User", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="JModel", Name="Group")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -838,6 +1109,28 @@ namespace BizService
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MessageTb>("JModel.FK_MessageTb_Group", "MessageTb", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_Group", "Friend")]
+        public EntityCollection<Friend> Friends
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Friend>("JModel.FK_Friends_Group", "Friend");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Friend>("JModel.FK_Friends_Group", "Friend", value);
                 }
             }
         }
@@ -1614,6 +1907,50 @@ namespace BizService
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserState>("JModel.FK_UserState_User", "UserState", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_User", "Friend")]
+        public EntityCollection<Friend> Friends
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Friend>("JModel.FK_Friends_User", "Friend");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Friend>("JModel.FK_Friends_User", "Friend", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("JModel", "FK_Friends_User1", "Friend")]
+        public EntityCollection<Friend> Friends1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Friend>("JModel.FK_Friends_User1", "Friend");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Friend>("JModel.FK_Friends_User1", "Friend", value);
                 }
             }
         }

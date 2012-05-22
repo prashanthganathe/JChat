@@ -4,18 +4,24 @@
 
 <h2>@ViewBag.Message</h2>
 <p>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+   <input name="postcode" class="postcode hint fl " id="postcode" type="text" placeholder="e.g W1W 5BB" autocomplete="on" />
+@*   <input type="text" name="UserName" value="@ViewBag.UserName"   />
+   <input type="text" name="UserName" value="@ViewBag.Status"  />*@
+
+   Grp
 </p>
 
-<ul data-role="listview" data-inset="true">
+<ul data-role="listview" data-theme="c" data-dividertheme="d" data-counttheme="e">
     <li data-role="list-divider">Navigation</li>
     <li>@Html.ActionLink("About", "About", "Home")</li>
     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-    <li><a href="choose_town.html" data-transition="slidedown"> <img src="sushis.jpg"/> <h3> Some Sushis</h3></a></li>
-	<li><a href="choose_town.html"  data-transition="slidedown"> <img src="pizza.jpg"/> <h3> A Pizza </h3></a></li>
-	<li><a href="choose_town.html"  data-transition="slidedown"> <img src="kebap.jpg"/> <h3> A Kebap</h3></a></li>
-	<li><a href="choose_town.html"  data-transition="slidedown"> <img src="burger.jpg"/> <h3> A Burger</h3></a></li>
-	<li><a href="choose_town.html"  data-transition="slidedown"> <img src="nems.jpg"/> <h3> Some Nems </h3></a></li>
+    <li>@Html.TextBox("FirstName", ViewData["Grp"])</li>
+
+    <li><a href="choose_town.html" data-transition="slidedown">  <h3> Some Sushis</h3></a></li>
+	<li><a href="choose_town.html"  data-transition="slidedown"> <h3> A Pizza </h3></a></li>
+	<li><a href="choose_town.html"  data-transition="slidedown">  <h3> A Kebap</h3></a></li>
+	<li><a href="choose_town.html"  data-transition="slidedown">  <h3> A Burger</h3></a></li>
+	<li><a href="choose_town.html"  data-transition="slidedown">  <h3> Some Nems </h3></a></li>
 	<li><a href="choose_town.html"  data-transition="slidedown"> <img src="tradi.jpg"/> <h3> Something more traditional</h3></a></li>	
 </ul>

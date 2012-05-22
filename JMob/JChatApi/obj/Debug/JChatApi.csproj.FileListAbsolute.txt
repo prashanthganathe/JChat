@@ -36,3 +36,5 @@ E:\androidChat\JChat\JMob\JChatApi\bin\System.Web.WebPages.Razor.xml
 E:\androidChat\JChat\JMob\JChatApi\obj\Debug\ResolveAssemblyReference.cache
 E:\androidChat\JChat\JMob\JChatApi\obj\Debug\JChatApi.dll
 E:\androidChat\JChat\JMob\JChatApi\obj\Debug\JChatApi.pdb
+E:\androidChat\JChat\JMob\JChatApi\bin\Newtonsoft.Json.dll
+E:\androidChat\JChat\JMob\JChatApi\bin\Newtonsoft.Json.xml

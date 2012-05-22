@@ -4,10 +4,11 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="JModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="JModelStoreContainer">
           <EntitySet Name="Answer" EntityType="JModel.Store.Answer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Block" EntityType="JModel.Store.Block" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Friends" EntityType="JModel.Store.Friends" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Group" EntityType="JModel.Store.Group" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MessageTb" EntityType="JModel.Store.MessageTb" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Question" EntityType="JModel.Store.Question" store:Type="Tables" Schema="dbo" />
@@ -28,6 +29,18 @@
           <AssociationSet Name="FK_Block_User1" Association="JModel.Store.FK_Block_User1">
             <End Role="User" EntitySet="User" />
             <End Role="Block" EntitySet="Block" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_Group" Association="JModel.Store.FK_Friends_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User" Association="JModel.Store.FK_Friends_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User1" Association="JModel.Store.FK_Friends_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
           <AssociationSet Name="FK_MessageTb_Group" Association="JModel.Store.FK_MessageTb_Group">
             <End Role="Group" EntitySet="Group" />
@@ -61,6 +74,15 @@
           <Property Name="BlockedUId" Type="int" />
           <Property Name="BlockedToUId" Type="int" />
           <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="FId" />
+          </Key>
+          <Property Name="FId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="int" />
+          <Property Name="FrID" Type="int" />
+          <Property Name="GID" Type="int" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -161,6 +183,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Friends_Group">
+          <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
+          <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GId" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User1">
+          <End Role="User" Type="JModel.Store.User" Multiplicity="0..1" />
+          <End Role="Friends" Type="JModel.Store.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="FrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MessageTb_Group">
           <End Role="Group" Type="JModel.Store.Group" Multiplicity="0..1" />
           <End Role="MessageTb" Type="JModel.Store.MessageTb" Multiplicity="*" />
@@ -200,8 +258,7 @@
         <Function Name="CreateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GName" Type="varchar" Mode="In" />
         </Function>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -241,6 +298,19 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserState" EntitySet="UserStates" />
           </AssociationSet>
+          <EntitySet Name="Friends" EntityType="JModel.Friend" />
+          <AssociationSet Name="FK_Friends_Group" Association="JModel.FK_Friends_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User" Association="JModel.FK_Friends_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User1" Association="JModel.FK_Friends_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Answer">
           <Key>
@@ -274,6 +344,7 @@
           <Property Name="GName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
           <Property Name="DateTime" Type="DateTime" />
           <NavigationProperty Name="MessageTbs" Relationship="JModel.FK_MessageTb_Group" FromRole="Group" ToRole="MessageTb" />
+          <NavigationProperty Name="Friends" Relationship="JModel.FK_Friends_Group" FromRole="Group" ToRole="Friend" />
         </EntityType>
         <EntityType Name="MessageTb">
           <Key>
@@ -316,6 +387,8 @@
           <NavigationProperty Name="Blocks1" Relationship="JModel.FK_Block_User1" FromRole="User" ToRole="Block" />
           <NavigationProperty Name="Questions" Relationship="JModel.FK_Question_User" FromRole="User" ToRole="Question" />
           <NavigationProperty Name="UserStates" Relationship="JModel.FK_UserState_User" FromRole="User" ToRole="UserState" />
+          <NavigationProperty Name="Friends" Relationship="JModel.FK_Friends_User" FromRole="User" ToRole="Friend" />
+          <NavigationProperty Name="Friends1" Relationship="JModel.FK_Friends_User1" FromRole="User" ToRole="Friend" />
         </EntityType>
         <EntityType Name="UserState">
           <Key>
@@ -411,6 +484,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="FId" />
+          </Key>
+          <Property Type="Int32" Name="FId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UID" />
+          <Property Type="Int32" Name="FrID" />
+          <Property Type="Int32" Name="GID" />
+          <NavigationProperty Name="Group" Relationship="JModel.FK_Friends_Group" FromRole="Friend" ToRole="Group" />
+          <NavigationProperty Name="User" Relationship="JModel.FK_Friends_User" FromRole="Friend" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="JModel.FK_Friends_User1" FromRole="Friend" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Friends_Group">
+          <End Type="JModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="GID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User">
+          <End Type="JModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User1">
+          <End Type="JModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="FrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -467,6 +588,16 @@
             <ScalarProperty Name="Status" ColumnName="Status" />
             <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="JModel.Friend">
+              <MappingFragment StoreEntitySet="Friends">
+                <ScalarProperty Name="GID" ColumnName="GID" />
+                <ScalarProperty Name="FrID" ColumnName="FrID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="FId" ColumnName="FId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -488,45 +619,63 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model">
-        <EntityTypeShape EntityType="JModel.Answer" Width="1.5" PointX="5.25" PointY="7.125" Height="2.5571907552083326" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.Block" Width="1.5" PointX="3" PointY="6.375" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.Group" Width="1.5" PointX="0.75" PointY="1.5" Height="1.7879850260416665" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.MessageTb" Width="1.5" PointX="3" PointY="1" Height="2.7494921874999996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.Question" Width="1.5" PointX="3" PointY="9.25" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.User" Width="1.5" PointX="0.75" PointY="5.25" Height="3.3263964843749996" IsExpanded="true" />
-        <EntityTypeShape EntityType="JModel.UserState" Width="1.5" PointX="3" PointY="12.25" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Answer" Width="1.5" PointX="6" PointY="3.75" Height="2.5571907552083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Block" Width="1.5" PointX="4.125" PointY="5.125" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Group" Width="1.5" PointX="0.5" PointY="0.5" Height="1.9802864583333331" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.MessageTb" Width="1.5" PointX="3.25" PointY="1" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.Question" Width="1.5" PointX="6" PointY="7.125" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.User" Width="1.5" PointX="2.375" PointY="4.125" Height="3.7109993489583317" IsExpanded="true" />
+        <EntityTypeShape EntityType="JModel.UserState" Width="1.5" PointX="0.5" PointY="4.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="JModel.FK_Answer_Question" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="9.4660953776041659" />
-          <ConnectorPoint PointX="5.25" PointY="9.4660953776041659" />
+          <ConnectorPoint PointX="6.75" PointY="7.125" />
+          <ConnectorPoint PointX="6.75" PointY="6.3071907552083326" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_Answer_User" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="5.78125" />
-          <ConnectorPoint PointX="6" PointY="5.78125" />
-          <ConnectorPoint PointX="6" PointY="7.125" />
+          <ConnectorPoint PointX="3.875" PointY="4.59375" />
+          <ConnectorPoint PointX="6" PointY="4.59375" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_Block_User" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="7.4612939453125" />
-          <ConnectorPoint PointX="3" PointY="7.4612939453125" />
+          <ConnectorPoint PointX="3.875" PointY="6.2112939453125" />
+          <ConnectorPoint PointX="4.125" PointY="6.2112939453125" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_Block_User1" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="6.85564697265625" />
-          <ConnectorPoint PointX="3" PointY="6.85564697265625" />
+          <ConnectorPoint PointX="3.875" PointY="5.60564697265625" />
+          <ConnectorPoint PointX="4.125" PointY="5.60564697265625" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_MessageTb_Group" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="2.3939925130208333" />
-          <ConnectorPoint PointX="3" PointY="2.3939925130208333" />
+          <ConnectorPoint PointX="2" PointY="1.7401432291666665" />
+          <ConnectorPoint PointX="2.6979166666666665" PointY="1.7401432291666659" />
+          <ConnectorPoint PointX="2.8645833333333335" PointY="1.7401432291666665" />
+          <ConnectorPoint PointX="2.9322941666666664" PointY="1.7401432291666659" />
+          <ConnectorPoint PointX="3.0989608333333334" PointY="1.7401432291666665" />
+          <ConnectorPoint PointX="3.25" PointY="1.7401432291666665" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_Question_User" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="8.576396484375" />
-          <ConnectorPoint PointX="1.5" PointY="10.3362939453125" />
-          <ConnectorPoint PointX="1.8229191666666667" PointY="10.3362939453125" />
-          <ConnectorPoint PointX="1.9895858333333332" PointY="10.3362939453125" />
-          <ConnectorPoint PointX="3" PointY="10.3362939453125" />
+          <ConnectorPoint PointX="3.875" PointY="7.5980436197916656" />
+          <ConnectorPoint PointX="6" PointY="7.5980436197916656" />
         </AssociationConnector>
         <AssociationConnector Association="JModel.FK_UserState_User" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.9062525" PointY="8.576396484375" />
-          <ConnectorPoint PointX="1.9062525" PointY="13.240143229166666" />
-          <ConnectorPoint PointX="3" PointY="13.240143229166666" />
+          <ConnectorPoint PointX="2.375" PointY="5.4901432291666659" />
+          <ConnectorPoint PointX="2" PointY="5.4901432291666659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="JModel.Friend" Width="1.5" PointX="5.75" PointY="0.5" Height="2.3648893229166674" />
+        <AssociationConnector Association="JModel.FK_Friends_Group" >
+          <ConnectorPoint PointX="2" PointY="0.71875" />
+          <ConnectorPoint PointX="2.9322941666666664" PointY="0.71874999999999944" />
+          <ConnectorPoint PointX="3.0989608333333334" PointY="0.71875" />
+          <ConnectorPoint PointX="5.75" PointY="0.71875" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Friends_User" >
+          <ConnectorPoint PointX="2.78125" PointY="4.125" />
+          <ConnectorPoint PointX="2.78125" PointY="0.85937750000000079" />
+          <ConnectorPoint PointX="2.9322941666666664" PointY="0.85937750000000024" />
+          <ConnectorPoint PointX="3.0989608333333334" PointY="0.85937750000000079" />
+          <ConnectorPoint PointX="5.75" PointY="0.85937750000000079" />
+        </AssociationConnector>
+        <AssociationConnector Association="JModel.FK_Friends_User1" ManuallyRouted="false" >
+          <ConnectorPoint PointX="3.0156275" PointY="4.125" />
+          <ConnectorPoint PointX="3.0156275" PointY="0.57812249999999921" />
+          <ConnectorPoint PointX="5.75" PointY="0.57812249999999921" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

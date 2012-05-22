@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using BizService;
 
 namespace JChatApi.Controllers
 {
     public class ValuesController : ApiController
     {
+        //// GET /api/values
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
+
+
         // GET /api/values
-        public IEnumerable<string> Get()
+        public MyDataClass Get()
         {
-            return new string[] { "value1", "value2" };
+            return new MyDataClass
+            {
+                MyProperty1 = "Property 1", // String
+                MyProperty2 = true, // Bool
+                MyProperty3 = 987654, // Integer
+                MyProperty4 = 100.87m // Decimal
+            };
         }
 
         // GET /api/values/5

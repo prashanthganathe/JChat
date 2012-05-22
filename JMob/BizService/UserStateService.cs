@@ -25,4 +25,13 @@ namespace BizService
                 return "";
         }
     }
+
+    //test class for webapi
+    public class MyDataClass
+    {
+        public string MyProperty1 { get; set; }
+        public bool MyProperty2 { get; set; }
+        public int MyProperty3 { get; set; }
+        public decimal MyProperty4 { get; set; }
+    }
 }

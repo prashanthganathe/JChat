@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AnswerService.cs" />
     <Compile Include="BlockService.cs" />
+    <Compile Include="FriendService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="Model.Designer.cs">

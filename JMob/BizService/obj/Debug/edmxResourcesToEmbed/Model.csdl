@@ -36,6 +36,19 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserState" EntitySet="UserStates" />
     </AssociationSet>
+    <EntitySet Name="Friends" EntityType="JModel.Friend" />
+    <AssociationSet Name="FK_Friends_Group" Association="JModel.FK_Friends_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Friend" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_User" Association="JModel.FK_Friends_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Friend" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_User1" Association="JModel.FK_Friends_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Friend" EntitySet="Friends" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Answer">
     <Key>
@@ -69,6 +82,7 @@
     <Property Name="GName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <Property Name="DateTime" Type="DateTime" />
     <NavigationProperty Name="MessageTbs" Relationship="JModel.FK_MessageTb_Group" FromRole="Group" ToRole="MessageTb" />
+    <NavigationProperty Name="Friends" Relationship="JModel.FK_Friends_Group" FromRole="Group" ToRole="Friend" />
   </EntityType>
   <EntityType Name="MessageTb">
     <Key>
@@ -111,6 +125,8 @@
     <NavigationProperty Name="Blocks1" Relationship="JModel.FK_Block_User1" FromRole="User" ToRole="Block" />
     <NavigationProperty Name="Questions" Relationship="JModel.FK_Question_User" FromRole="User" ToRole="Question" />
     <NavigationProperty Name="UserStates" Relationship="JModel.FK_UserState_User" FromRole="User" ToRole="UserState" />
+    <NavigationProperty Name="Friends" Relationship="JModel.FK_Friends_User" FromRole="User" ToRole="Friend" />
+    <NavigationProperty Name="Friends1" Relationship="JModel.FK_Friends_User1" FromRole="User" ToRole="Friend" />
   </EntityType>
   <EntityType Name="UserState">
     <Key>
@@ -203,6 +219,54 @@
       </Principal>
       <Dependent Role="UserState">
         <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Friend">
+    <Key>
+      <PropertyRef Name="FId" />
+    </Key>
+    <Property Type="Int32" Name="FId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="UID" />
+    <Property Type="Int32" Name="FrID" />
+    <Property Type="Int32" Name="GID" />
+    <NavigationProperty Name="Group" Relationship="JModel.FK_Friends_Group" FromRole="Friend" ToRole="Group" />
+    <NavigationProperty Name="User" Relationship="JModel.FK_Friends_User" FromRole="Friend" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="JModel.FK_Friends_User1" FromRole="Friend" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Friends_Group">
+    <End Type="JModel.Group" Role="Group" Multiplicity="0..1" />
+    <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GId" />
+      </Principal>
+      <Dependent Role="Friend">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_User">
+    <End Type="JModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Friend">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_User1">
+    <End Type="JModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="JModel.Friend" Role="Friend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="Friend">
+        <PropertyRef Name="FrID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

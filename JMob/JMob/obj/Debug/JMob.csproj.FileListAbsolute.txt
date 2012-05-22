@@ -36,3 +36,7 @@ E:\androidChat\JChat\JMob\JMob\obj\Debug\JMob.dll
 E:\androidChat\JChat\JMob\JMob\obj\Debug\JMob.pdb
 E:\androidChat\JChat\JMob\JMob\bin\JChatApi.dll
 E:\androidChat\JChat\JMob\JMob\bin\JChatApi.pdb
+E:\androidChat\JChat\JMob\JMob\bin\BizService.dll
+E:\androidChat\JChat\JMob\JMob\bin\BizService.pdb
+E:\androidChat\JChat\JMob\JMob\bin\Newtonsoft.Json.dll
+E:\androidChat\JChat\JMob\JMob\bin\Newtonsoft.Json.xml

@@ -8,19 +8,22 @@ namespace BizService
     public class UserService
     {
        ModelEntities model = new ModelEntities();
-        public int Create(User obj)
+        public string Create(User obj)
         {
             var Grp = model.Users.Single(e => e.IP == obj.IP);
             if (Grp != null)
             {
                 Grp.LastLogin = DateTime.Now;
-                return Grp.UId;
+                return Grp.UName;
             }
             obj.UName = GetUniqueUser();
             obj.IsActive = true;
             obj.LastLogin = DateTime.Now;            
             model.Users.AddObject(obj);
-            return model.SaveChanges();            
+            if (model.SaveChanges()>0)
+                return obj.UName;
+            else
+                return "";
         }
 
         public string GetUniqueUser()
